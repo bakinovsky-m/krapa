@@ -6,6 +6,7 @@ set(src
 
 set(hdr
   cargo_type.hpp
+  ship.hpp
   )
 
 project(krapa)
