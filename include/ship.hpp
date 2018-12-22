@@ -8,12 +8,11 @@
 class Ship{
 public:
   Ship() = default;
-  Ship(const std::string name_, const double wght, const int time_in_query_,
-       const double rate_, CargoType * cargo_) :
+  Ship(const std::string name_, const double wght, CargoType * cargo_) :
     name(name_),
     amount(wght),
-    time_in_query(time_in_query_),
-    rate(rate_),
+    time_in_query(0),
+    rate(0),
     time_to_unload(0),
     cargo(cargo_)
   {}
