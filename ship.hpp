@@ -1,56 +1,42 @@
 #ifndef SHIP_HPP
 #define SHIP_HPP
 
+#include <iostream>
 #include <string>
 #include "cargo_type.hpp"
-#include "port.h"
-
 
 class Ship{
 public:
-  Ship(std::string name_, double wght, int time_in_query_,
-       double rate_, CargoType cargo_, Port port_) :
+  Ship() = default;
+  Ship(const std::string name_, const double wght, const int time_in_query_,
+       const double rate_, CargoType * cargo_) :
     name(name_),
-    weight(wght),
+    amount(wght),
     time_in_query(time_in_query_),
     rate(rate_),
-    cargo(cargo_),
-    port(port_)
+    time_to_unload(0),
+    cargo(cargo_)
   {}
 
   std::string name;
-  CargoType cargo;
 
-  Port port;
-  double weight;
+  double amount;
   int time_in_query;
   double rate;
   int time_to_unload;
+  CargoType * cargo;
 
-  void countRate();
-  void countTimeToUnload();
-  void stepInQuery();
+  void countRate(){
+    rate = amount * cargo->koefPorchi * cargo->importance * time_in_query;
+  }
 
+  void print() const {
+    std::cout << "amount: " << amount << std::endl;
+    cargo->print();
+    std::cout << "time_in_query: " << time_in_query << std::endl;
+    std::cout << "rate: " << rate << std::endl;
+    std::cout << "time_to_unload: " << time_to_unload << std::endl;
+  }
 };
-
-void Ship::countTimeToUnload()
-{
-    time_to_unload = int(weight / port.unloadingSpeed);
-}
-
-void Ship::stepInQuery()
-{
-    time_in_query++;
-}
-
-
-void Ship::countRate()
-{
-    rate = weight * cargo.koefPorchi * cargo.importance * time_in_query;
-}
-
-
-
-
 
 #endif // CARGO_TYPE_HPP

@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 2.8)
 project(krapa C CXX)
 
+
 set(src
   main.cpp
   port.cpp
@@ -13,3 +14,6 @@ set(hdr
   )
 
 add_executable(${PROJECT_NAME} ${src} ${hdr})
+
+
+set_property(TARGET ${PROJECT_NAME} PROPERTY CXX_STANDARD 11)
