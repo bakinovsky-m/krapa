@@ -26,7 +26,8 @@ public:
   CargoType * cargo;
 
   void countRate(){
-    rate = amount * cargo->koefPorchi * cargo->importance * time_in_query;
+    rate = amount * cargo->koefPorchi * cargo->importance;
+    rate *= time_in_query == 0 ? 1 : time_in_query;
   }
 
   void print() const {

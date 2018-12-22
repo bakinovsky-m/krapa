@@ -5,6 +5,7 @@
 void Port::addShip(Ship ship)
 {
   ship.time_to_unload = static_cast<int>(ship.amount / unloadingSpeed);
+  ship.countRate();
   queue.push_back(ship);
 }
 
