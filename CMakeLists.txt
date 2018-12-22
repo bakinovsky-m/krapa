@@ -3,15 +3,17 @@ project(krapa C CXX)
 
 
 set(src
-  main.cpp
-  port.cpp
+  src/main.cpp
+  src/port.cpp
   )
 
 set(hdr
-  cargo_type.hpp
-  ship.hpp
-  port.h
+  include/cargo_type.hpp
+  include/ship.hpp
+  include/port.h
   )
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 add_executable(${PROJECT_NAME} ${src} ${hdr})
 
