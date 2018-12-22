@@ -22,11 +22,11 @@ public:
   double rate;
 
 
-  void CountRate();
+  void countRate();
 };
 
 
-void Ship::CountRate()
+void Ship::countRate()
 {
 
     rate = weight * cargo_type.koefPorchi * cargo_type.importance * time_in_query;
