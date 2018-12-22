@@ -30,11 +30,13 @@ public:
   }
 
   void print() const {
-    std::cout << "amount: " << amount << std::endl;
-    cargo->print();
+    std::cout << name << std::endl;
     std::cout << "time_in_query: " << time_in_query << std::endl;
     std::cout << "rate: " << rate << std::endl;
     std::cout << "time_to_unload: " << time_to_unload << std::endl;
+    std::cout << "cargo" << std::endl;
+    cargo->print();
+    std::cout << "amount: " << amount << std::endl;
   }
 };
 

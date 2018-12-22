@@ -28,9 +28,11 @@ public:
   void print() const {
     std::cout << "SHIPS IN QUEUE" << std::endl;
     for(Ship s : queue){
+      std::cout << "---------" << std::endl;
       s.print();
     }
     if(inUse){
+      std::cout << std::endl;
       std::cout << "SHIP ON UNLOADING" << std::endl;
       shipOnUnloading.print();
     }
