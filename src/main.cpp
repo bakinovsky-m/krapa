@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <random>
+#include <cmath>
 
 #include "cargo_type.hpp"
 #include "port.h"
@@ -16,6 +18,7 @@ void tickCargoTypes(vector<CargoType> & ct){
 int main()
 {
   vector<CargoType> ct{};
+  // random na max_amount
   ct.push_back(CargoType("nasvay", 1.01, 100, 7, 1, 7));
   ct.push_back(CargoType("carrot", 1.23, 1000, 200, 1, 12));
   Port p{};
@@ -23,39 +26,24 @@ int main()
   p.addShip(Ship("carrot for poor rabbits", 12, &ct[1]));
   p.addShip(Ship("fucking carrot", 17, &ct[1]));
 
-  cout << "BEFORE TICK" << endl;
-  cout << "++++++++++++++++++++++++++++++++++++++++" << endl;
-  p.print();
-  for (CargoType & c:ct){
-    cout << c.name << ": " << c.cur_amount << "/" << c.max_amount << endl;
-  }
+  default_random_engine eng(1);
+  normal_distribution<double> intensity{};
+  normal_distribution<double> port_speed(1, 1);
 
-  tickCargoTypes(ct);
-  p.tick();
-  cout << endl << "AFTER 1 TICK" << endl;
-  cout << "++++++++++++++++++++++++++++++++++++++++" << endl;
-  p.print();
-
-  tickCargoTypes(ct);
-  p.tick();
-  cout << endl << "AFTER 2 TICK" << endl;
-  cout << "++++++++++++++++++++++++++++++++++++++++" << endl;
-  p.print();
-
-  tickCargoTypes(ct);
-  p.tick();
-  cout << endl << "AFTER 3 TICK" << endl;
-  cout << "++++++++++++++++++++++++++++++++++++++++" << endl;
-  p.print();
-
-  int a = 4;
+  int a = 0;
   while(!p.time_to_stop){
+    p.unloadingSpeed = ceil(port_speed(eng));
+    if (fabs(intensity(eng)) > 0.99) {
+      p.addShip(Ship("asd", 1, &ct[0]));
+    }
     cout << endl << "AFTER " << a << " TICK" << endl;
     cout << "++++++++++++++++++++++++++++++++++++++++" << endl;
+    cout << "port speed: " << p.unloadingSpeed << endl;
     tickCargoTypes(ct);
     p.tick();
     p.print();
     a++;
+    cin.get();
   }
 
   return 0;

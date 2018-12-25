@@ -6,7 +6,7 @@
 
 void Port::addShip(Ship ship)
 {
-  ship.time_to_unload = static_cast<int>(ship.amount / unloadingSpeed);
+  ship.time_to_unload = fabs(unloadingSpeed) <= 0.0001 ? -1 : static_cast<int>(ship.amount / fabs(unloadingSpeed));
   for(Ship & s : queue) {
     ship.time_to_park += s.time_to_unload;
   }
@@ -18,12 +18,15 @@ void Port::tick(){
   // пересчёт рейтинга
   int ind = 0;
   for (Ship & sh : queue){
+    sh.time_to_unload = fabs(unloadingSpeed) <= 0.0001 ? -1 : static_cast<int>(sh.amount / fabs(unloadingSpeed));
+  }
+  for (Ship & sh : queue){
     sh.time_in_queue += 1;
     sh.time_to_park = 0;
     for(auto s = queue.begin() + ind + 1; s != queue.end(); ++s){
-      sh.time_to_park += s->time_to_unload;
+      sh.time_to_park += (s->time_to_unload == -1) ? 0 : s->time_to_unload;
     }
-    sh.time_to_park += shipOnUnloading.time_to_unload;
+    sh.time_to_park += (shipOnUnloading.time_to_unload == -1) ? 0 : shipOnUnloading.time_to_unload;
     sh.rate = sh.countRate();
     ind++;
   }
@@ -46,9 +49,9 @@ void Port::tick(){
   for (Ship & sh : queue){
     sh.time_to_park = 0;
     for(auto s = queue.begin() + ind + 1; s != queue.end(); ++s){
-      sh.time_to_park += s->time_to_unload;
+      sh.time_to_park += (s->time_to_unload == -1) ? 0 : s->time_to_unload;
     }
-    sh.time_to_park += shipOnUnloading.time_to_unload - 1;
+    sh.time_to_park += (shipOnUnloading.time_to_unload == -1) ? 0 : shipOnUnloading.time_to_unload;
     ind++;
   }
 
