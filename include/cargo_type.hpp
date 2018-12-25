@@ -7,10 +7,10 @@
 class CargoType{
 public:
   CargoType() = default;
-  CargoType(std::string name_, double kp, double imp) : 
+  CargoType(const std::string name_, const double koefPorchi_, const double importance_) : 
     name(name_),
-    koefPorchi(kp),
-    importance(imp)
+    koefPorchi(koefPorchi_),
+    importance(importance_)
   {}
   
   std::string name;
