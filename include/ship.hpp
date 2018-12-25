@@ -8,7 +8,7 @@
 class Ship{
 public:
   Ship() = default;
-  Ship(const std::string name_, const double wght, const CargoType * cargo_) :
+  Ship(const std::string name_, const double wght, CargoType * cargo_) :
     name(name_),
     amount(wght),
     time_in_queue(0),
@@ -25,11 +25,11 @@ public:
   double rate;
   int time_to_unload;
   int time_to_park;
-  const CargoType * cargo;
+  CargoType * cargo;
 
-  double countRate(){
-    double ret = amount * cargo->koefPorchi * cargo->importance;
-    ret *= time_in_queue == 0 ? 1 : time_in_queue;
+  double countRate(int extra_time=0){
+    double ret = cargo->koefPorchi * (time_in_queue + time_to_park + extra_time);
+    ret += amount * cargo->importance;
     return ret;
   }
 
@@ -39,9 +39,9 @@ public:
     std::cout << "rate: " << rate << std::endl;
     std::cout << "time_to_park: " << time_to_park << std::endl;
     std::cout << "time_to_unload: " << time_to_unload << std::endl;
+    std::cout << "amount on ship: " << amount << std::endl;
     std::cout << "cargo" << std::endl;
     cargo->print();
-    std::cout << "amount: " << amount << std::endl;
   }
 };
 
