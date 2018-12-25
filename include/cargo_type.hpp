@@ -3,24 +3,49 @@
 
 #include <string>
 #include <iostream>
+#include <cmath>
 
 class CargoType{
 public:
   CargoType() = default;
-  CargoType(const std::string name_, const double koefPorchi_, const double importance_) : 
+  CargoType(const std::string name_,
+            const double koefPorchi_,
+            const int max_amount_,
+            const int cur_amount_,
+            const int speed_of_usage_,
+            const double default_need_) :
     name(name_),
     koefPorchi(koefPorchi_),
-    importance(importance_)
+    importance(0),
+    max_amount(max_amount_),
+    cur_amount(cur_amount_),
+    speed_of_usage(speed_of_usage_),
+    default_need(default_need_)
   {}
-  
+
   std::string name;
   double koefPorchi;
   double importance;
 
+  int max_amount;
+  int cur_amount;
+  int speed_of_usage; // in amount in tick
+  double default_need;
+
+  void tick() {
+    if(cur_amount == 0){
+      importance = default_need;
+      return;
+    }
+    cur_amount -= speed_of_usage;
+    importance = (double)max_amount/cur_amount;
+  }
+
   void print() const {
     std::cout << "name: " << name << std::endl;
-    std::cout <<  "koefPorchi: " << koefPorchi << std::endl;
+    std::cout << "koefPorchi: " << koefPorchi << std::endl;
     std::cout << "importance: " << importance << std::endl;
+    std::cout << "amount in port: " << cur_amount << "/" << max_amount << std::endl;
   }
 };
 
