@@ -29,11 +29,16 @@ void Port::tick(){
   }
 
   // общение
-  for(size_t i = 0; i < queue.size() - 1; ++i){
-    Ship * curr = &queue[i];
-    Ship * next = &queue[i + 1];
-    if(curr->rate > next->rate){
-      std::iter_swap(queue.begin() + i, queue.begin() + i + 1);
+  if (queue.size() > 0){
+    for(size_t i = 0; i < queue.size() - 1; ++i){
+      Ship * curr = &queue[i];
+      Ship * next = &queue[i + 1];
+      if(curr->rate > next->rate){
+        if(next->countRate(curr->time_to_unload) < curr->rate){
+          std::iter_swap(queue.begin() + i, queue.begin() + i + 1);
+          break;
+        }
+      }
     }
   }
 
@@ -49,14 +54,18 @@ void Port::tick(){
 
   // отправка на разгрузку
   if(!inUse){
-    queue.back().time_to_park = 0;
     shipOnUnloading = queue.back();
     queue.pop_back();
+    shipOnUnloading.cargo->cur_amount += shipOnUnloading.amount;
     inUse = true;
   } else if (shipOnUnloading.time_to_unload == 0){
-    queue.back().time_to_park = 0;
+    if (queue.size() == 0){
+      time_to_stop = true;
+      return;
+    }
     shipOnUnloading = queue.back();
     queue.pop_back();
+    shipOnUnloading.cargo->cur_amount += shipOnUnloading.amount;
   }
   shipOnUnloading.time_to_unload -= 1;
 }
