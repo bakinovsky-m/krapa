@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <deque>
 #include <array>
 #include "ship.hpp"
 //class Ship;
@@ -19,7 +20,7 @@ public:
   void addShip(Ship ship);
   void tick();
   
-  std::vector<Ship> queue;
+  std::deque<Ship> queue;
   double unloadingSpeed;
   Ship shipOnUnloading;
   bool inUse;
