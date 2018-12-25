@@ -20,7 +20,8 @@ public:
     max_amount(max_amount_),
     cur_amount(cur_amount_),
     speed_of_usage(speed_of_usage_),
-    default_need(default_need_)
+    default_need(default_need_),
+    time_with_no_supplies(0)
   {}
 
   std::string name;
@@ -31,14 +32,25 @@ public:
   int cur_amount;
   int speed_of_usage; // in amount in tick
   double default_need;
+  int time_with_no_supplies;
 
   void tick() {
-    if(cur_amount == 0){
+    if(cur_amount <= 0){
       importance = default_need;
       return;
     }
     cur_amount -= speed_of_usage;
-    importance = (double)max_amount/cur_amount;
+
+    if(cur_amount <= 0) {
+      cur_amount = 0;
+      time_with_no_supplies++;
+    }
+    importance = fabs((double)max_amount/cur_amount);
+  }
+
+  void addAmount(int add) {
+    cur_amount += add;
+    time_with_no_supplies = 0;
   }
 
   void print() const {

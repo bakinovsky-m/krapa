@@ -20,7 +20,7 @@ public:
 
   std::string name;
 
-  double amount;
+  int amount;
   int time_in_queue;
   double rate;
   int time_to_unload;
@@ -29,7 +29,7 @@ public:
 
   double countRate(int extra_time=0){
     double ret = cargo->koefPorchi * (time_in_queue + time_to_park + extra_time);
-    ret += amount * cargo->importance;
+    ret += amount * cargo->importance * cargo->time_with_no_supplies;
     return ret;
   }
 

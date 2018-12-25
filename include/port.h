@@ -20,6 +20,7 @@ public:
   {}
   void addShip(Ship ship);
   void tick();
+  void dumb_tick();
 
   std::deque<Ship> queue;
   double unloadingSpeed;

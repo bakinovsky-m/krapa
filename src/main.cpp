@@ -18,7 +18,7 @@ void tickCargoTypes(vector<CargoType> & ct){
 int main()
 {
   vector<CargoType> ct{};
-  // random na max_amount
+  // TODO: random na max_amount
   ct.push_back(CargoType("nasvay", 1.01, 100, 7, 1, 7));
   ct.push_back(CargoType("carrot", 1.23, 1000, 200, 1, 12));
   Port p{};
@@ -36,16 +36,18 @@ int main()
   uniform_int_distribution<int> cargo_type_index(0, ct.size() - 1);
 
   int a = 0;
-  while(!p.time_to_stop && a < 100){
+  while(!p.time_to_stop && a < 1000){
     p.unloadingSpeed = fabs(ceil(port_speed(eng_for_port_speed)));
     if (fabs(intensity(eng_for_intensity)) > 0.99) {
-      p.addShip(Ship("asd", round(fabs(amount(eng_for_cargo_amount)) * 10), &ct[cargo_type_index(eng_for_cargo_type)]));
+      int qwe = round(cargo_type_index(eng_for_cargo_type));
+      p.addShip(Ship("asd", round(fabs(amount(eng_for_cargo_amount)) * 10), &ct[qwe]));
     }
 //    cout << endl << "AFTER " << a << " TICK" << endl;
 //    cout << "++++++++++++++++++++++++++++++++++++++++" << endl;
 //    cout << "port speed: " << p.unloadingSpeed << endl;
     tickCargoTypes(ct);
     p.tick();
+//    p.dumb_tick();
 //    p.print();
     a++;
 //    cin.get();
