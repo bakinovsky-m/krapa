@@ -15,16 +15,17 @@ public:
     queue(),
     unloadingSpeed(1),
     shipOnUnloading(),
-    inUse(false)
+    inUse(false),
+    time_to_stop(false)
   {}
   void addShip(Ship ship);
   void tick();
-  
+
   std::deque<Ship> queue;
   double unloadingSpeed;
   Ship shipOnUnloading;
   bool inUse;
-  // типы
+  bool time_to_stop;
 
   void print() const {
     std::cout << "SHIPS IN QUEUE" << std::endl;
@@ -35,6 +36,7 @@ public:
     if(inUse){
       std::cout << std::endl;
       std::cout << "SHIP ON UNLOADING" << std::endl;
+      std::cout << "---------" << std::endl;
       shipOnUnloading.print();
     }
   }
