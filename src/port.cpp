@@ -61,7 +61,7 @@ void Port::tick(){
     queue.pop_back();
     shipOnUnloading.cargo->cur_amount += shipOnUnloading.amount;
     inUse = true;
-  } else if (shipOnUnloading.time_to_unload == 0){
+  } else if (shipOnUnloading.time_to_unload <= 0){
     if (queue.size() == 0){
       time_to_stop = true;
       return;

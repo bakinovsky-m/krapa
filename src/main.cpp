@@ -32,7 +32,7 @@ int main()
 
   int a = 0;
   while(!p.time_to_stop){
-    p.unloadingSpeed = ceil(port_speed(eng));
+    p.unloadingSpeed = fabs(ceil(port_speed(eng)));
     if (fabs(intensity(eng)) > 0.99) {
       p.addShip(Ship("asd", 1, &ct[0]));
     }
