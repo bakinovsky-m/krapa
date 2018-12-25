@@ -11,7 +11,7 @@ void Port::addShip(Ship ship)
 
 void Port::tick(){
   for (Ship & sh : queue){
-    sh.time_in_query += 1;
+    sh.time_in_queue += 1;
     sh.countRate();
   }
   if(!inUse){

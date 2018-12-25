@@ -11,7 +11,7 @@ public:
   Ship(const std::string name_, const double wght, CargoType * cargo_) :
     name(name_),
     amount(wght),
-    time_in_query(0),
+    time_in_queue(0),
     rate(0),
     time_to_unload(0),
     cargo(cargo_)
@@ -20,19 +20,19 @@ public:
   std::string name;
 
   double amount;
-  int time_in_query;
+  int time_in_queue;
   double rate;
   int time_to_unload;
   CargoType * cargo;
 
   void countRate(){
     rate = amount * cargo->koefPorchi * cargo->importance;
-    rate *= time_in_query == 0 ? 1 : time_in_query;
+    rate *= time_in_queue == 0 ? 1 : time_in_queue;
   }
 
   void print() const {
     std::cout << name << std::endl;
-    std::cout << "time_in_query: " << time_in_query << std::endl;
+    std::cout << "time_in_queue: " << time_in_queue << std::endl;
     std::cout << "rate: " << rate << std::endl;
     std::cout << "time_to_unload: " << time_to_unload << std::endl;
     std::cout << "cargo" << std::endl;
