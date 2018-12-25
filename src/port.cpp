@@ -6,6 +6,9 @@
 
 void Port::addShip(Ship ship)
 {
+  if (ship.cargo->cur_amount + ship.amount >= ship.cargo->max_amount) {
+    return;
+  }
   ship.time_to_unload = fabs(unloadingSpeed) <= 0.0001 ? -1 : static_cast<int>(ship.amount / fabs(unloadingSpeed));
   for(Ship & s : queue) {
     ship.time_to_park += s.time_to_unload;
