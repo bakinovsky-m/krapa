@@ -14,6 +14,7 @@ public:
     time_in_queue(0),
     rate(0),
     time_to_unload(0),
+    time_to_park(0),
     cargo(cargo_)
   {}
 
@@ -23,17 +24,20 @@ public:
   int time_in_queue;
   double rate;
   int time_to_unload;
+  int time_to_park;
   const CargoType * cargo;
 
-  void countRate(){
-    rate = amount * cargo->koefPorchi * cargo->importance;
-    rate *= time_in_queue == 0 ? 1 : time_in_queue;
+  double countRate(){
+    double ret = amount * cargo->koefPorchi * cargo->importance;
+    ret *= time_in_queue == 0 ? 1 : time_in_queue;
+    return ret;
   }
 
   void print() const {
     std::cout << name << std::endl;
     std::cout << "time_in_queue: " << time_in_queue << std::endl;
     std::cout << "rate: " << rate << std::endl;
+    std::cout << "time_to_park: " << time_to_park << std::endl;
     std::cout << "time_to_unload: " << time_to_unload << std::endl;
     std::cout << "cargo" << std::endl;
     cargo->print();
