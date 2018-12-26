@@ -76,7 +76,9 @@ void Port::tick(Results & results){
       return;
     }
     results.mid_time_of_waiting += shipOnUnloading.time_in_queue;
-    results.koef_zagruzki.unloaded += 1;
+    results.koef_zagruzki.mid += results.koef_zagruzki.come;
+    results.koef_zagruzki.come = 0;
+    results.koef_zagruzki.count++;
     shipOnUnloading = queue.back();
     queue.pop_back();
   }
@@ -101,7 +103,9 @@ void Port::dumb_tick(Results & results){
       return;
     }
     results.mid_time_of_waiting += shipOnUnloading.time_in_queue;
-    results.koef_zagruzki.unloaded += 1;
+    results.koef_zagruzki.mid += results.koef_zagruzki.come;
+    results.koef_zagruzki.come = 0;
+    results.koef_zagruzki.count++;
     shipOnUnloading = queue.back();
     queue.pop_back();
   }

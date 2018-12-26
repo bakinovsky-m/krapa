@@ -4,11 +4,10 @@
 struct KoefZagruzki{
   int come = 0;
   int unloaded = 0;
+  double mid = 0;
+  int count = 0;
   double get() const {
-    if (come == 0) {
-      return 0;
-    }
-    return (double)come/unloaded;
+    return mid/count;
   }
 };
 

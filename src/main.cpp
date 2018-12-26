@@ -114,6 +114,8 @@ Results dumb_simulate(Port p, vector<CargoType> & ct, int ticks) {
   return results;
 }
 
+int TICKS = 10000;
+
 int main(){
   int times = 50;
   double mid_tick_score = 0;
@@ -131,7 +133,7 @@ int main(){
     ct.push_back(CargoType("nasvay", 1.01, 1000, 7, 1, 1000));
     Port p{};
     p.addShip(Ship("nasvay bringer", 2, &ct[0]));
-    Results results = simulate(p, ct, 1000);
+    Results results = simulate(p, ct, TICKS);
     mid_tick_score += results.score;
     mid_len_of_queue += results.mid_len_of_queue;
     mid_time_in_queue += results.mid_time_of_waiting;
@@ -143,7 +145,7 @@ int main(){
     ct.push_back(CargoType("nasvay", 1.01, 1000, 7, 1, 1000));
     Port p1{};
     p1.addShip(Ship("nasvay bringer", 2, &ct[0]));
-    Results results = dumb_simulate(p1, ct, 1000);
+    Results results = dumb_simulate(p1, ct, TICKS);
     mid_dumb_tick_score += results.score;
     mid_dumb_len_of_queue += results.mid_len_of_queue;
     mid_dumb_time_in_queue += results.mid_time_of_waiting;
