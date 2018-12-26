@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "ship.hpp"
+#include "results.h"
 
 void Port::addShip(Ship ship)
 {
@@ -20,7 +21,10 @@ void Port::addShip(Ship ship)
   queue.push_front(ship);
 }
 
-void Port::tick(){
+void Port::tick(Results & results){
+  if (queue.size() <= 0){
+    return;
+  }
   // пересчёт рейтинга
   int ind = 0;
   for (Ship & sh : queue){
@@ -66,37 +70,40 @@ void Port::tick(){
   if(!inUse){
     shipOnUnloading = queue.back();
     queue.pop_back();
-//    shipOnUnloading.cargo->cur_amount += shipOnUnloading.amount;
-//    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
     inUse = true;
   } else if (shipOnUnloading.time_to_unload <= 0){
     if (queue.size() == 0){
-      time_to_stop = true;
       return;
     }
+    results.mid_time_of_waiting += shipOnUnloading.time_in_queue;
+    results.koef_zagruzki.unloaded += 1;
     shipOnUnloading = queue.back();
     queue.pop_back();
-//    shipOnUnloading.cargo->cur_amount += shipOnUnloading.amount;
-//    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
   }
   shipOnUnloading.cargo->addAmount(unloadingSpeed);
   shipOnUnloading.time_to_unload -= unloadingSpeed;
 }
 
-void Port::dumb_tick(){
+void Port::dumb_tick(Results & results){
+  if (queue.size() <= 0){
+    return;
+  }
+
+  for (Ship & sh : queue){
+    sh.time_in_queue += 1;
+  }
   if(!inUse){
     shipOnUnloading = queue.back();
     queue.pop_back();
-//    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
     inUse = true;
   } else if (shipOnUnloading.time_to_unload <= 0){
     if (queue.size() == 0){
-      time_to_stop = true;
       return;
     }
+    results.mid_time_of_waiting += shipOnUnloading.time_in_queue;
+    results.koef_zagruzki.unloaded += 1;
     shipOnUnloading = queue.back();
     queue.pop_back();
-//    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
   }
   shipOnUnloading.cargo->addAmount(unloadingSpeed);
   shipOnUnloading.time_to_unload -= unloadingSpeed;

@@ -6,6 +6,7 @@
 #include <deque>
 #include <array>
 #include "ship.hpp"
+#include "results.h"
 //class Ship;
 
 class Port
@@ -19,8 +20,8 @@ public:
     time_to_stop(false)
   {}
   void addShip(Ship ship);
-  void tick();
-  void dumb_tick();
+  void tick(Results & results);
+  void dumb_tick(Results & results);
 
   std::deque<Ship> queue;
   double unloadingSpeed;

@@ -11,6 +11,7 @@ set(hdr
   include/cargo_type.hpp
   include/ship.hpp
   include/port.h
+  include/results.h
   )
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
