@@ -6,6 +6,9 @@
 
 void Port::addShip(Ship ship)
 {
+  if (queue.size() > 100){
+    return;
+  }
   if (ship.cargo->cur_amount + ship.amount >= ship.cargo->max_amount) {
     return;
   }
@@ -42,7 +45,8 @@ void Port::tick(){
       if(curr->rate > next->rate){
         if(next->countRate(curr->time_to_unload) < curr->rate){
           std::iter_swap(queue.begin() + i, queue.begin() + i + 1);
-          break;
+//          break;
+          ++i;
         }
       }
     }
