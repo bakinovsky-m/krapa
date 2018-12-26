@@ -67,7 +67,7 @@ void Port::tick(){
     shipOnUnloading = queue.back();
     queue.pop_back();
 //    shipOnUnloading.cargo->cur_amount += shipOnUnloading.amount;
-    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
+//    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
     inUse = true;
   } else if (shipOnUnloading.time_to_unload <= 0){
     if (queue.size() == 0){
@@ -77,16 +77,17 @@ void Port::tick(){
     shipOnUnloading = queue.back();
     queue.pop_back();
 //    shipOnUnloading.cargo->cur_amount += shipOnUnloading.amount;
-    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
+//    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
   }
-  shipOnUnloading.time_to_unload -= 1;
+  shipOnUnloading.cargo->addAmount(unloadingSpeed);
+  shipOnUnloading.time_to_unload -= unloadingSpeed;
 }
 
 void Port::dumb_tick(){
   if(!inUse){
     shipOnUnloading = queue.back();
     queue.pop_back();
-    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
+//    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
     inUse = true;
   } else if (shipOnUnloading.time_to_unload <= 0){
     if (queue.size() == 0){
@@ -95,7 +96,8 @@ void Port::dumb_tick(){
     }
     shipOnUnloading = queue.back();
     queue.pop_back();
-    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
+//    shipOnUnloading.cargo->addAmount(shipOnUnloading.amount);
   }
-  shipOnUnloading.time_to_unload -= 1;
+  shipOnUnloading.cargo->addAmount(unloadingSpeed);
+  shipOnUnloading.time_to_unload -= unloadingSpeed;
 }
